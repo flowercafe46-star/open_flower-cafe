@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower CAFÉ | الافتتاح الكبير</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        serifEn: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        roseSoft: '#FCE4EC',
+                        roseBlush: '#F6C8D4',
+                        creamLuxury: '#FFFDFB',
+                        goldBase: '#C69546',
+                        goldShine: '#F3D79A',
+                        goldDeep: '#8E621E',
+                        espresso: '#4A2E1B',
+                        mocha: '#7D5840',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(255, 253, 251, 0.85) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(235, 174, 191, 0.55) 0%, transparent 45%),
+                linear-gradient(155deg, #FDE8EE 0%, #F8CED9 52%, #F2B7C7 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 253, 251, 0.94);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(198, 149, 70, 0.45);
+            box-shadow:
+                0 25px 60px -15px rgba(74, 46, 27, 0.18),
+                0 0 0 5px rgba(255, 253, 251, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .logo-frame {
+            background: linear-gradient(135deg, #8A5B18 0%, #F7E5AC 26%, #C69546 52%, #FFF3C9 76%, #996921 100%);
+            padding: 5px;
+            box-shadow:
+                0 14px 30px rgba(142, 98, 30, 0.28),
+                0 0 0 6px rgba(246, 200, 212, 0.45);
+        }
+
+        .btn-instagram {
+            background: linear-gradient(95deg, #D62976 0%, #FA7E1E 55%, #962FBF 100%);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .btn-instagram:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+            box-shadow: 0 12px 24px rgba(214, 41, 118, 0.35);
+        }
+
+        .btn-tiktok {
+            background: linear-gradient(95deg, #141414 0%, #2B2B2B 100%);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .btn-tiktok:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.06);
+            box-shadow: 0 12px 24px rgba(20, 20, 20, 0.34);
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        @keyframes fallPetal {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.85);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.15);
+                opacity: 0;
+            }
+        }
+        .petal {
+            position: fixed;
+            top: -5%;
+            z-index: 50;
+            pointer-events: none;
+            animation: fallPetal linear forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center py-8 px-4 relative selection:bg-roseBlush selection:text-espresso">
+
+    <div class="fixed top-6 right-6 text-2xl opacity-50 pointer-events-none select-none animate-float">🌷</div>
+    <div class="fixed bottom-8 left-6 text-2xl opacity-50 pointer-events-none select-none animate-float" style="animation-delay: 1.4s;">☕</div>
+    <div class="fixed top-1/3 left-5 text-xl opacity-40 pointer-events-none select-none animate-float" style="animation-delay: 2.2s;">✨</div>
+
+    <button
+        onclick="toggleSettingsModal()"
+        title="تعديل بيانات الكافيه والروابط"
+        class="fixed top-4 left-4 z-40 w-10 h-10 rounded-full bg-creamLuxury/90 border border-goldBase/45 text-goldDeep flex items-center justify-center shadow-sm hover:bg-white transition active:scale-95"
+        aria-label="إعدادات الموقع">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+    </button>
+
+    <main class="w-full max-w-[460px] mx-auto z-10">
+        <div class="glass-card rounded-[34px] px-5 py-7 sm:px-7 sm:py-9 text-center relative overflow-hidden">
+
+            <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-44 bg-roseBlush/55 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- اللوجو الدائري بنفس الحجم -->
+            <div class="relative mx-auto w-40 h-40 mb-4">
+                <div class="logo-frame w-full h-full rounded-full flex items-center justify-center overflow-hidden">
+                    <div class="w-full h-full rounded-full bg-white overflow-hidden flex items-center justify-center">
+                        <img
+                            id="cafeLogoImg"
+                            src="Screenshot 2026-11-24 183100.png"
+                            alt=""
+                            class="w-full h-full object-cover"
+                            onerror="handleLogoError(this)"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div id="displayCafeName" class="text-2xl font-serifEn font-bold tracking-wide text-goldDeep mb-1" dir="ltr">
+                Flower CAFÉ
+            </div>
+            <div class="text-[11px] font-bold tracking-[0.22em] text-mocha uppercase mb-4" dir="ltr">
+                GIFTS • FLOWERS • COFFEE
+            </div>
+
+            <div class="inline-flex items-center justify-center gap-2 bg-[#FFF0F4] border border-goldBase/35 text-espresso text-xs sm:text-sm font-extrabold px-4 py-1.5 rounded-full mb-4 shadow-2xs">
+                <span>✨</span>
+                <span>الافتتاح الكبير قريباً</span>
+                <span>✨</span>
+            </div>
+
+            <h1 class="text-2xl sm:text-[26px] font-black text-espresso leading-snug mb-6">
+                أجواء ورد، قهوة مختصة، وهدايا بتفاصيل تفرق 🌸☕🎁
+            </h1>
+
+            <!-- صندوق موعد الافتتاح والعد التنازلي -->
+            <div class="bg-gradient-to-b from-[#FFF7F9] to-[#FDEBF0] border border-goldBase/45 rounded-3xl p-4 sm:p-5 mb-6 shadow-inner">
+                <div class="text-goldDeep font-extrabold text-xs sm:text-sm mb-1">
+                    موعد الافتتاح الرسمي
+                </div>
+
+                <div id="displayOpeningDate" class="text-base sm:text-lg font-black text-espresso mb-3.5">
+                    الجمعة 27 نوفمبر 2026 • الساعة 5:00 مساءً 🎉
+                </div>
+
+                <div id="countdownGrid" class="grid grid-cols-4 gap-2 max-w-[320px] mx-auto" dir="ltr">
+                    <div class="bg-white border border-goldBase/30 rounded-2xl py-2 px-1 shadow-2xs">
+                        <span id="cd-days" class="block text-base sm:text-lg font-black text-espresso">00</span>
+                        <span class="text-[10px] font-bold text-mocha">يوم</span>
+                    </div>
+                    <div class="bg-white border border-goldBase/30 rounded-2xl py-2 px-1 shadow-2xs">
+                        <span id="cd-hours" class="block text-base sm:text-lg font-black text-espresso">00</span>
+                        <span class="text-[10px] font-bold text-mocha">ساعة</span>
+                    </div>
+                    <div class="bg-white border border-goldBase/30 rounded-2xl py-2 px-1 shadow-2xs">
+                        <span id="cd-minutes" class="block text-base sm:text-lg font-black text-espresso">00</span>
+                        <span class="text-[10px] font-bold text-mocha">دقيقة</span>
+                    </div>
+                    <div class="bg-white border border-goldBase/30 rounded-2xl py-2 px-1 shadow-2xs">
+                        <span id="cd-seconds" class="block text-base sm:text-lg font-black text-[#D62976]">00</span>
+                        <span class="text-[10px] font-bold text-mocha">ثانية</span>
+                    </div>
+                </div>
+                <div id="openingLiveBanner" class="hidden mt-2 text-sm font-extrabold text-[#D62976]">
+                    🎉 أهلاً بكم.. بدأ الافتتاح الكبير الآن! 🌸
+                </div>
+            </div>
+
+            <div class="space-y-3 mb-5">
+                <a id="link-instagram" href="https://www.instagram.com/flower_cafe_1?cnvx=b2ZuanJ2c2xrdjdj" target="_blank" rel="noopener noreferrer"
+                   class="btn-instagram w-full rounded-full py-3.5 px-5 flex items-center justify-between text-white shadow-md active:scale-[0.98]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-sm sm:text-base">تابعينا على Instagram</span>
+                    </div>
+                    <span class="bg-white/25 text-white text-xs font-bold px-3.5 py-1.5 rounded-full">
+                        اضغطي هنا
+                    </span>
+                </a>
+
+                <a id="link-tiktok" href="https://www.tiktok.com/@flower.caf?_r=1&_t=ZS-9Beh3wdBufl" target="_blank" rel="noopener noreferrer"
+                   class="btn-tiktok w-full rounded-full py-3.5 px-5 flex items-center justify-between text-white shadow-md active:scale-[0.98]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-sm sm:text-base">تابعينا على TikTok</span>
+                    </div>
+                    <span class="bg-white/20 text-white text-xs font-bold px-3.5 py-1.5 rounded-full">
+                        اضغطي هنا
+                    </span>
+                </a>
+            </div>
+
+            <button onclick="celebrateGift()" class="text-xs text-mocha hover:text-espresso transition font-bold flex items-center justify-center gap-1.5 mx-auto">
+                <span>* تابعينا عشان توصلك عروض وهدايا الافتتاح أول بأول</span>
+                <span class="text-sm">💗</span>
+            </button>
+        </div>
+
+        <p class="text-center text-xs text-espresso/75 mt-4 font-bold">
+            Flower CAFÉ • ننتظركم يوم الجمعة 27 نوفمبر الساعة 5:00 مساءً 🌸
+        </p>
+    </main>
+
+    <!-- نافذة إعدادات -->
+    <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-espresso/45 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-creamLuxury border-2 border-goldBase rounded-3xl w-full max-w-md p-6 shadow-2xl text-right max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-goldBase/25 pb-3 mb-4">
+                <h2 class="text-lg font-extrabold text-espresso">تعديل بيانات الكافيه ✨</h2>
+                <button onclick="toggleSettingsModal()" class="text-mocha hover:text-espresso text-xl font-bold px-2">✕</button>
+            </div>
+
+            <div class="space-y-3 text-sm">
+                <div>
+                    <label class="block font-bold text-espresso mb-1">اسم الكافيه:</label>
+                    <input id="inputCafeName" type="text" value="Flower CAFÉ" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-espresso mb-1">مسار أو رابط صورة اللوجو:</label>
+                    <input id="inputLogoUrl" type="text" value="Screenshot 2026-11-24 183100.png" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-espresso mb-1">نص موعد الافتتاح المعروض:</label>
+                    <input id="inputOpeningText" type="text" value="الجمعة 27 نوفمبر 2026 • الساعة 5:00 مساءً 🎉" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-espresso mb-1">تاريخ ووقت العد التنازلي:</label>
+                    <input id="inputTargetDate" type="datetime-local" value="2026-11-27T17:00" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-espresso mb-1">رابط Instagram:</label>
+                    <input id="inputInsta" type="url" value="https://www.instagram.com/flower_cafe_1?cnvx=b2ZuanJ2c2xrdjdj" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-espresso mb-1">رابط TikTok:</label>
+                    <input id="inputTiktok" type="url" value="https://www.tiktok.com/@flower.caf?_r=1&_t=ZS-9Beh3wdBufl" class="w-full rounded-xl border border-goldBase/40 bg-white px-3 py-2 text-espresso focus:outline-none focus:border-goldBase" dir="ltr">
+                </div>
+            </div>
+
+            <div class="mt-5 flex gap-2">
+                <button onclick="saveSettings()" class="flex-1 bg-goldBase hover:bg-goldDeep text-white font-bold py-2.5 rounded-xl transition shadow-md">
+                    حفظ التعديلات
+                </button>
+                <button onclick="toggleSettingsModal()" class="px-4 py-2.5 rounded-xl border border-goldBase/40 text-espresso font-bold hover:bg-roseSoft transition">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const LOGO_BASE_NAME = 'Screenshot 2026-11-24 183100';
+        const DEFAULT_LOGO_URL = `${LOGO_BASE_NAME}.png`;
+        const DEFAULT_OPENING_TEXT = 'الجمعة 27 نوفمبر 2026 • الساعة 5:00 مساءً 🎉';
+        const DEFAULT_TARGET_ISO = '2026-11-27T17:00:00';
+        const STORAGE_KEY = 'flower_cafe_qr_settings_v6';
+
+        let targetOpeningTime = new Date(DEFAULT_TARGET_ISO).getTime();
+
+        function handleLogoError(imgEl) {
+            const fallbackExts = ['.jpg', '.jpeg', '.webp'];
+            const currentSrc = imgEl.getAttribute('src') || '';
+            if (currentSrc.startsWith(LOGO_BASE_NAME)) {
+                const idx = Number(imgEl.dataset.extIdx || 0);
+                if (idx < fallbackExts.length) {
+                    imgEl.dataset.extIdx = String(idx + 1);
+                    imgEl.src = `${LOGO_BASE_NAME}${fallbackExts[idx]}`;
+                }
+            }
+        }
+
+        function toDatetimeLocalValue(timestamp) {
+            const d = new Date(timestamp);
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        function applyLogo(logoUrl) {
+            const imgEl = document.getElementById('cafeLogoImg');
+            imgEl.dataset.extIdx = '0';
+            imgEl.src = (logoUrl && logoUrl.trim() !== '') ? logoUrl.trim() : DEFAULT_LOGO_URL;
+        }
+
+        function updateCountdown() {
+            const now = Date.now();
+            const distance = targetOpeningTime - now;
+
+            const daysEl = document.getElementById('cd-days');
+            const hoursEl = document.getElementById('cd-hours');
+            const minsEl = document.getElementById('cd-minutes');
+            const secsEl = document.getElementById('cd-seconds');
+            const bannerEl = document.getElementById('openingLiveBanner');
+
+            if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+            if (distance <= 0) {
+                daysEl.textContent = '00';
+                hoursEl.textContent = '00';
+                minsEl.textContent = '00';
+                secsEl.textContent = '00';
+                if (bannerEl) bannerEl.classList.remove('hidden');
+                return;
+            }
+
+            if (bannerEl) bannerEl.classList.add('hidden');
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            daysEl.textContent = String(days).padStart(2, '0');
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minsEl.textContent = String(minutes).padStart(2, '0');
+            secsEl.textContent = String(seconds).padStart(2, '0');
+        }
+
+        function toggleSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal) modal.classList.toggle('hidden');
+        }
+
+        function applyDataToUI(data) {
+            if (data.cafeName) {
+                document.getElementById('displayCafeName').textContent = data.cafeName;
+                document.getElementById('inputCafeName').value = data.cafeName;
+            }
+            if (typeof data.logoUrl === 'string') {
+                applyLogo(data.logoUrl);
+                document.getElementById('inputLogoUrl').value = data.logoUrl;
+            }
+            if (data.openingText) {
+                document.getElementById('displayOpeningDate').textContent = data.openingText;
+                document.getElementById('inputOpeningText').value = data.openingText;
+            }
+            if (data.targetTimestamp) {
+                targetOpeningTime = Number(data.targetTimestamp);
+                document.getElementById('inputTargetDate').value = toDatetimeLocalValue(targetOpeningTime);
+            }
+            if (data.insta) {
+                document.getElementById('link-instagram').href = data.insta;
+                document.getElementById('inputInsta').value = data.insta;
+            }
+            if (data.tiktok) {
+                document.getElementById('link-tiktok').href = data.tiktok;
+                document.getElementById('inputTiktok').value = data.tiktok;
+            }
+            updateCountdown();
+        }
+
+        function saveSettings() {
+            const targetInputVal = document.getElementById('inputTargetDate').value;
+            const parsedTarget = targetInputVal ? new Date(targetInputVal).getTime() : targetOpeningTime;
+
+            const newData = {
+                cafeName: document.getElementById('inputCafeName').value.trim() || 'Flower CAFÉ',
+                logoUrl: document.getElementById('inputLogoUrl').value.trim() || DEFAULT_LOGO_URL,
+                openingText: document.getElementById('inputOpeningText').value.trim() || DEFAULT_OPENING_TEXT,
+                targetTimestamp: Number.isNaN(parsedTarget) ? targetOpeningTime : parsedTarget,
+                insta: document.getElementById('inputInsta').value.trim() || 'https://www.instagram.com/flower_cafe_1?cnvx=b2ZuanJ2c2xrdjdj',
+                tiktok: document.getElementById('inputTiktok').value.trim() || 'https://www.tiktok.com/@flower.caf?_r=1&_t=ZS-9Beh3wdBufl'
+            };
+
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+            } catch (e) {
+                console.warn('تعذر حفظ الإعدادات محلياً:', e);
+            }
+
+            applyDataToUI(newData);
+            toggleSettingsModal();
+        }
+
+        function celebrateGift() {
+            const icons = ['🌸', '🌷', '💗', '☕', '✨'];
+            for (let i = 0; i < 20; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal text-xl';
+                petal.textContent = icons[i % icons.length];
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.animationDuration = `${2.2 + Math.random() * 1.8}s`;
+                petal.style.animationDelay = `${Math.random() * 0.4}s`;
+                document.body.appendChild(petal);
+
+                petal.addEventListener('animationend', () => petal.remove());
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            applyLogo(DEFAULT_LOGO_URL);
+            document.getElementById('inputTargetDate').value = toDatetimeLocalValue(targetOpeningTime);
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    applyDataToUI(JSON.parse(saved));
+                }
+            } catch (e) {
+                console.warn('تعذر قراءة الإعدادات المحفوظة:', e);
+            }
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
